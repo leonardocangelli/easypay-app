@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">EasyPay</string>
+    <string name="entre">Entre</string>
+    <string name="email">E-mail</string>
+    <string name="cadastre_se">Ainda não possui conta? Cadastre-se</string>
+    <string name="entrar">Entrar</string>
+    <string name="senha">Senha</string>
 </resources>
