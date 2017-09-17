@@ -23,6 +23,7 @@ import br.com.easypayapp.easypay.BaseActivity;
 import br.com.easypayapp.easypay.Constants;
 import br.com.easypayapp.easypay.MainActivity;
 import br.com.easypayapp.easypay.R;
+import br.com.easypayapp.easypay.cadastro.CadastroActivity;
 import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 
 public class LoginActivity extends BaseActivity {
@@ -47,6 +48,10 @@ public class LoginActivity extends BaseActivity {
         String email = edit_text_email.getText().toString();
         String senha = edit_text_password.getText().toString();
         Toast.makeText(this, volleyHelperRequest.volleyLogar(email, senha), Toast.LENGTH_LONG).show();
+    }
+
+    public void abrirCadastro(View view) {
+        startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
     }
 
 }

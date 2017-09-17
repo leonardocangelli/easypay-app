@@ -37,14 +37,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/edit_text_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/background_edittext"
             android:drawableLeft="@drawable/ic_mail_outline"
@@ -89,28 +92,37 @@
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:paddingEnd="78dp"
+            android:paddingLeft="78dp"
+            android:paddingRight="78dp"
+            android:paddingStart="78dp"
             android:background="@drawable/background_button"
+            android:clickable="true"
+            android:onClick="logar"
             android:text="@string/entrar"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:onClick="logar"
             android:textSize="16sp" />
 
     </LinearLayout>
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:alpha="0.8"
+        android:background="@null"
+        android:clickable="true"
+        android:onClick="abrirCadastro"
         android:text="@string/cadastre_se"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 
