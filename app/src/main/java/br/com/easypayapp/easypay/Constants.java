@@ -4,4 +4,6 @@ public class Constants {
 
     public static final String TOKEN = "TOKEN";
     public static final String ENDPOINT = "http://easypayapi.azurewebsites.net/api/";
+    //usuario/login
+    //usuario/{id}
 }
