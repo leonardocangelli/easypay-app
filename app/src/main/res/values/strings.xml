@@ -5,4 +5,16 @@
     <string name="cadastre_se">Ainda não possui conta? Cadastre-se</string>
     <string name="entrar">Entrar</string>
     <string name="senha">Senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="nome">Nome</string>
+    <string name="telefone">Telefone</string>
+    <string name="cpf">CPF</string>
+    <string name="nome_cartao">Nome no cartão</string>
+    <string name="numero_cartao">Número no cartão</string>
+    <string name="mm">mm</string>
+    <string name="aa">aa</string>
+    <string name="cvv">CVV</string>
+    <string name="carregando">Carregando...</string>
+    <string name="login_invalido">Login inválido</string>
+    <string name="cadastrar_cartao">Cadastrar cartão</string>
 </resources>

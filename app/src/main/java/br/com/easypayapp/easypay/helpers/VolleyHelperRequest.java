@@ -1,5 +1,6 @@
 package br.com.easypayapp.easypay.helpers;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.easypayapp.easypay.Constants;
+import br.com.easypayapp.easypay.R;
 import br.com.easypayapp.easypay.login.LoginActivity;
 
 /**

@@ -9,8 +9,7 @@ import java.util.Date;
 public class Usuario {
 
     private Long Id;
-    private String nome, apelido, endereco, rg, cpf, genero, numeroCelular;
-    private Date dataNascimento;
+    private String nome, email, telefone, cpf, senha;
 
     public Long getId() {
         return Id;
@@ -28,28 +27,20 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getApelido() {
-        return apelido;
+    public String getEmail() {
+        return email;
     }
 
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getCpf() {
@@ -60,27 +51,11 @@ public class Usuario {
         this.cpf = cpf;
     }
 
-    public String getGenero() {
-        return genero;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public String getNumeroCelular() {
-        return numeroCelular;
-    }
-
-    public void setNumeroCelular(String numeroCelular) {
-        this.numeroCelular = numeroCelular;
-    }
-
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
