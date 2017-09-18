@@ -21,7 +21,7 @@ import br.com.easypayapp.easypay.login.LoginActivity;
  */
 
 public class VolleyHelperRequest {
-
+  
     private static VolleyHelperRequest mInstance;
     private RequestQueue mRequestQueue;
     private static Context mContext;
@@ -48,6 +48,4 @@ public class VolleyHelperRequest {
     public<T> void addToRequestQueue(Request<T> request){
         getRequestQueue().add(request);
     }
-
-
 }
