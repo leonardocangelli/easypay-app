@@ -37,6 +37,7 @@ public class CadastroActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
         mContext = getApplicationContext();
         initViews();
     }

@@ -1,8 +1,10 @@
 package br.com.easypayapp.easypay.login;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +34,6 @@ public class LoginActivity extends BaseActivity {
 
     private EditText edit_text_email, edit_text_password;
     private Context mContext;
-    int statusLogin = 0;
-    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void setTokenPrefs(String token) {
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.TOKEN, token);
         editor.commit();
     }
@@ -60,15 +60,6 @@ public class LoginActivity extends BaseActivity {
         String email = edit_text_email.getText().toString();
         String senha = edit_text_password.getText().toString();
         doRequestLogin(email, senha);
-
-        if (statusLogin == 1) {
-            setTokenPrefs(token);
-            Intent intent = new Intent(mContext, MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(mContext, "Login inválido", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void abrirCadastro(View view) {
@@ -77,22 +68,28 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void doRequestLogin(final String email, final String senha) {
+
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage(mContext.getString(R.string.carregando));
+        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.ENDPOINT + "usuario/login",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-                        statusLogin = 1;
-                        token = "tk";
+                        setTokenPrefs("tokenx");
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                        pDialog.hide();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                        statusLogin = 0;
+                        Toast.makeText(LoginActivity.this, mContext.getString(R.string.login_invalido), Toast.LENGTH_SHORT).show();
+                        pDialog.hide();
                     }
                 }
         ) {
