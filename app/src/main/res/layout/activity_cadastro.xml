@@ -91,7 +91,7 @@
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/edit_text_cpfspep"
+        android:id="@+id/edit_text_cpf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

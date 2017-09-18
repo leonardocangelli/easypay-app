@@ -22,46 +22,31 @@ import br.com.easypayapp.easypay.login.LoginActivity;
 
 public class VolleyHelperRequest {
 
-    private RequestQueue requestQueue;
-    public String volleyResponse;
+    private static VolleyHelperRequest mInstance;
+    private RequestQueue mRequestQueue;
+    private static Context mContext;
 
-    public VolleyHelperRequest(Context context) {
-        requestQueue = Volley.newRequestQueue(context);
+    private VolleyHelperRequest(Context context){
+        mContext = context;
+        mRequestQueue = getRequestQueue();
     }
 
-    public String volleyLogar(final String email, final String senha) {
-        StringRequest request = new StringRequest(Request.Method.POST, Constants.ENDPOINT + "usuario/login", onPostsLoaded, onPostsError) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<>();
-                params.put("Email", email);
-                params.put("Senha", senha);
-
-                return params;
-            }
-        };
-        requestQueue.add(request);
-        return volleyResponse;
-    }
-
-    public String volleyGET(int id) {
-        StringRequest request = new StringRequest(Request.Method.GET, Constants.ENDPOINT + "usuario/" + id, onPostsLoaded, onPostsError);
-        requestQueue.add(request);
-        return volleyResponse;
-    }
-
-    private final Response.Listener<String> onPostsLoaded = new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            volleyResponse = response;
+    public static synchronized VolleyHelperRequest getInstance(Context context){
+        if(mInstance == null){
+            mInstance = new VolleyHelperRequest(context);
         }
-    };
+        return mInstance;
+    }
 
-    private final Response.ErrorListener onPostsError = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            volleyResponse = error.getMessage();
+    public RequestQueue getRequestQueue(){
+        if(mRequestQueue == null){
+            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         }
-    };
+        return mRequestQueue;
+    }
+
+    public<T> void addToRequestQueue(Request<T> request){
+        getRequestQueue().add(request);
+    }
+
 }
