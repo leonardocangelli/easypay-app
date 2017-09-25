@@ -1,5 +1,6 @@
 package br.com.easypayapp.easypay.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,11 +38,8 @@ public class Cartao {
         this.numero = numero;
     }
 
-    public Date getDataVencimento() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, Integer.parseInt(anoVencimento));
-        cal.set(Calendar.MONTH, Integer.parseInt(mesVencimento));
-        return cal.getTime();
+    public String getDataVencimento() {
+        return "01/" + mesVencimento + "/20" + anoVencimento;
     }
 
     public void setDataVencimento(Date dataVencimento) {

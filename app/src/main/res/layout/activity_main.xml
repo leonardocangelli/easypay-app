@@ -1,19 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:gravity="center"
+    android:paddingBottom="16dp"
+    android:paddingEnd="24dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingStart="24dp"
+    android:paddingTop="16dp"
     tools:context="br.com.easypayapp.easypay.MainActivity">
 
-    <Button
-        android:layout_width="wrap_content"
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Meus dados"
-        android:onClick="abrirMeusDados"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="#15FFFFFF"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_shopping_cart"
+            android:focusable="true"
+            android:onClick="abrirMesa"
+            android:padding="24dp"
+            android:text="@string/minha_mesa"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+        <!--<View-->
+        <!--android:layout_width="1dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:background="#66FFFFFF" />-->
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="#15FFFFFF"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_pan_tool"
+            android:focusable="true"
+            android:onClick="abrirAmigos"
+            android:padding="24dp"
+            android:text="@string/amigos"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+    </TableRow>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="2">-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#66FFFFFF" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginLeft="24dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginStart="24dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#66FFFFFF" />-->
+
+    <!--</LinearLayout>-->
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="#15FFFFFF"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_person"
+            android:focusable="true"
+            android:onClick="abrirMeusDados"
+            android:padding="24dp"
+            android:text="@string/meus_dados"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+        <!--<View-->
+        <!--android:layout_width="1dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:background="#66FFFFFF" />-->
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="#15FFFFFF"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_history"
+            android:focusable="true"
+            android:onClick="abrirHistorico"
+            android:padding="24dp"
+            android:text="@string/historico"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+    </TableRow>
+
+</TableLayout>

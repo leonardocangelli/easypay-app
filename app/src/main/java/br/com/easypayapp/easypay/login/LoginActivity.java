@@ -5,20 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,10 +43,11 @@ public class LoginActivity extends BaseActivity {
         initViews();
     }
 
-    private void setTokenPrefs(String token) {
+    private void setTokenPrefs(String token, String id) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.TOKEN, token);
+        editor.putString(Constants.ID, id);
         editor.commit();
     }
 
@@ -56,10 +56,23 @@ public class LoginActivity extends BaseActivity {
         edit_text_password = (EditText) findViewById(R.id.edit_text_password);
     }
 
+    public boolean isAllFilled() {
+        boolean filledEmail = edit_text_email.getText().toString().trim().length() != 0;
+        boolean filledPassword = edit_text_password.getText().toString().trim().length() != 0;
+
+        return filledEmail & filledPassword;
+    }
+
     public void logar(View view) {
         String email = edit_text_email.getText().toString();
         String senha = edit_text_password.getText().toString();
-        doRequestLogin(email, senha);
+
+        if (isAllFilled())
+            doRequestLogin(email, senha);
+        else
+            Toast.makeText(mContext, mContext.getString(R.string.erro_campos), Toast.LENGTH_LONG).show();
+
+
     }
 
     public void abrirCadastro(View view) {
@@ -79,17 +92,29 @@ public class LoginActivity extends BaseActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        setTokenPrefs("tokenx");
+                        JsonParser parser = new JsonParser();
+                        JsonObject obj = parser.parse(response).getAsJsonObject();
+
+                        String token = obj.get("Token").getAsString();
+                        String id = obj.get("Id").getAsString();
+
+                        setTokenPrefs(token, id);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
+
                         pDialog.hide();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, mContext.getString(R.string.login_invalido), Toast.LENGTH_SHORT).show();
                         pDialog.hide();
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 401) {
+                            Toast.makeText(LoginActivity.this, mContext.getString(R.string.login_invalido), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, mContext.getString(R.string.erro_request), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         ) {

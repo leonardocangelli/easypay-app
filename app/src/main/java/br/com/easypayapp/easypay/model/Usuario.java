@@ -1,12 +1,13 @@
 package br.com.easypayapp.easypay.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by joseleonardocangelli on 17/09/17.
  */
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private Long Id;
     private String nome, email, telefone, cpf, senha;
