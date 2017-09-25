@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/endColor</color>
-    <color name="colorPrimaryDark">@color/endColor</color>
-    <color name="colorAccent">@color/startColor</color>
+    <color name="colorPrimary">@color/startColor</color>
+    <color name="colorPrimaryDark">@color/startColor</color>
+    <color name="colorAccent">@color/endColor</color>
 
     <color name="startColor">#C6528D</color>
     <color name="endColor">#4D2A6C</color>
 
     <color name="background_button">#22FFFFFF</color>
     <color name="stroke_button">#44FFFFFF</color>
+
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
 </resources>

@@ -9,12 +9,29 @@
     <string name="nome">Nome</string>
     <string name="telefone">Telefone</string>
     <string name="cpf">CPF</string>
-    <string name="nome_cartao">Nome no cartão</string>
-    <string name="numero_cartao">Número no cartão</string>
+    <string name="nome_cartao">Nome do titular</string>
+    <string name="numero_cartao">Número do cartão</string>
     <string name="mm">mm</string>
     <string name="aa">aa</string>
     <string name="cvv">CVV</string>
+    <string name="continuar">Continuar</string>
     <string name="carregando">Carregando...</string>
     <string name="login_invalido">Login inválido</string>
     <string name="cadastrar_cartao">Cadastrar cartão</string>
+    <string name="erro_request">Erro ao conectar com o servidor</string>
+    <string name="erro_campos">Preencha todos os campos</string>
+
+    <string name="minha_mesa">Mesa</string>
+    <string name="amigos">Amigos</string>
+    <string name="meus_dados">Perfil</string>
+    <string name="historico">Histórico</string>
+
+    <string name="scan_barcode_button">Ler QR Code</string>
+    <string name="no_barcode_captured">Nenhum QR Code</string>
+    <string name="barcode_error_format">"Erro ao ler QRCode</string>
+
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">É necessário ter acesso à câmera</string>
+    <string name="no_camera_permission">O App pode apresentar problemas por não ter permissão para acessar a câmera</string>
+    <string name="low_storage_error">Erro, memória insuficiente</string>
 </resources>

@@ -38,7 +38,8 @@
         android:paddingStart="16dp"
         android:textColor="@android:color/white"
         android:textColorHint="#AAFFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:maxLength="50"/>
 
     <EditText
         android:id="@+id/edit_text_email"
@@ -63,7 +64,8 @@
         android:paddingStart="16dp"
         android:textColor="@android:color/white"
         android:textColorHint="#AAFFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:maxLength="50"/>
 
     <EditText
         android:id="@+id/edit_text_fone"
@@ -88,7 +90,8 @@
         android:paddingStart="16dp"
         android:textColor="@android:color/white"
         android:textColorHint="#AAFFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:maxLength="11"/>
 
     <EditText
         android:id="@+id/edit_text_cpf"
@@ -113,7 +116,8 @@
         android:paddingStart="16dp"
         android:textColor="@android:color/white"
         android:textColorHint="#AAFFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:maxLength="11"/>
 
     <EditText
         android:id="@+id/edit_text_password"
@@ -138,9 +142,11 @@
         android:paddingStart="16dp"
         android:textColor="@android:color/white"
         android:textColorHint="#AAFFFFFF"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:maxLength="20"/>
 
     <Button
+        android:id="@+id/btnContinuar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -149,14 +155,31 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/background_button"
         android:clickable="true"
-        android:onClick="cadastrar"
         android:paddingEnd="78dp"
         android:paddingLeft="78dp"
         android:paddingRight="78dp"
         android:paddingStart="78dp"
-        android:text="@string/cadastrar"
+        android:text="@string/continuar"
+        android:onClick="continuar"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnAlterarCartao"
+        android:layout_marginTop="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:alpha="0.8"
+        android:background="@null"
+        android:clickable="true"
+        android:onClick="alterarCartao"
+        android:text="Alterar Cartão"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
