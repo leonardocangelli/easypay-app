@@ -235,8 +235,15 @@ public class CadastroCartaoActivity extends ComposeActivity {
                     @Override
                     public void onResponse(String response) {
 
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        editor.putString(Constants.N_CARTAO, cartao.getNumero());
+                        editor.commit();
+
                         startActivity(new Intent(mContext, MainActivity.class));
                         finish();
+
                         pDialog.hide();
 
                     }
@@ -284,11 +291,14 @@ public class CadastroCartaoActivity extends ComposeActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        //startActivity(new Intent(mContext, MainActivity.class));
-                        //finish();
-                        //pDialog.hide();
-                        //finish();
-                        Toast.makeText(mContext, "Feito!", Toast.LENGTH_SHORT).show();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        editor.putString(Constants.N_CARTAO, cartao.getNumero());
+                        editor.commit();
+
+                        pDialog.hide();
+                        finish();
 
                     }
                 },
@@ -303,11 +313,11 @@ public class CadastroCartaoActivity extends ComposeActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("Id", id);
                 params.put("NomeTitular", cartao.getNome());
                 params.put("Numero", cartao.getNumero());
                 params.put("DataEntrada", cartao.getDataVencimento());
                 params.put("CodSeguranca", cartao.getCvv());
+                params.put("Id", id);
                 params.put("IdUsuario", idUsuario);
                 return params;
             }

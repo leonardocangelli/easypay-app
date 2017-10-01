@@ -14,6 +14,14 @@
     android:paddingTop="16dp"
     tools:context="br.com.easypayapp.easypay.MainActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginBottom="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:src="@drawable/logo" />
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

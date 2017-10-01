@@ -15,6 +15,14 @@
     android:paddingTop="8dp"
     tools:context="br.com.easypayapp.easypay.cadastro.CadastroActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:src="@drawable/logo" />
+
     <EditText
         android:id="@+id/edit_text_nome"
         android:layout_width="match_parent"
