@@ -2,12 +2,14 @@ package br.com.easypayapp.easypay;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.util.Base64;
@@ -18,56 +20,88 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import br.com.easypayapp.easypay.cadastro.CadastroActivity;
 import br.com.easypayapp.easypay.cartao.CadastroCartaoActivity;
+import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 import br.com.easypayapp.easypay.login.LoginActivity;
 import br.com.easypayapp.easypay.mesa.MesaActivity;
+import br.com.easypayapp.easypay.model.Pedido;
+import br.com.easypayapp.easypay.model.Usuario;
 
 public class MainActivity extends ComposeActivity {
 
     public String QRCODE_ENCODED = "";
+    private Context mContext;
+    boolean stop = false;
+    private AlertDialog dialog;
+    private Intent intentMesa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkToken();
         setContentView(R.layout.activity_main);
+        mContext = getApplicationContext();
+        setTitle("");
         setBackButton(false);
+
+        intentMesa = new Intent(mContext, MesaActivity.class);
     }
 
     public void abrirMesa(View view) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-        dialog.setTitle("Abrir Mesa");
-        dialog.setMessage("Verificamos que você não possui mesa aberta. Deseja abrir?");
-        dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                String qrcode = preferences.getString(Constants.QRCODE, null);
-                String id = preferences.getString(Constants.ID, null);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int mesa_aberta = preferences.getInt(Constants.MESA_ABERTA, 0);
 
-                if (qrcode == null) {
-                    gerarQR(id);
-                } else {
-                    abrirDialog(qrcode);
+        if(mesa_aberta == 0) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+            dialog.setTitle("Abrir Mesa");
+            dialog.setMessage("Verificamos que você não possui mesa aberta. Deseja abrir?");
+            dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                    String qrcode = preferences.getString(Constants.QRCODE, null);
+                    String id = preferences.getString(Constants.ID, null);
+
+                    if (qrcode == null) {
+                        gerarQR(id);
+                    } else {
+                        abrirDialog(qrcode);
+                    }
+
                 }
+            });
+            dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            dialog.create().show();
+        } else {
+            startActivity( intentMesa );
+        }
 
-            }
-        });
-        dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        dialog.create().show();
+
     }
 
     public void abrirAmigos(View view) {
@@ -102,9 +136,13 @@ public class MainActivity extends ComposeActivity {
         builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                stop = true;
             }
         });
-        final AlertDialog dialog = builder.create();
+        dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.qr_layout, null);
         dialog.setView(dialogLayout);
@@ -116,13 +154,8 @@ public class MainActivity extends ComposeActivity {
         ImageView img = (ImageView) dialog.findViewById(R.id.img);
 
         img.setImageBitmap(decodeBase64(qrcode));
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                startActivity(new Intent(MainActivity.this, MesaActivity.class));
-            }
-        });
+
+        callAsynchronousTask();
     }
 
     Bitmap TextToImageEncode(String Value) throws WriterException {
@@ -209,6 +242,87 @@ public class MainActivity extends ComposeActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.QRCODE, qrcode);
+        editor.commit();
+    }
+  
+
+    public void doRequestCheckPedido(final String token, final String idUsuario) {
+
+        StringRequest stringRequest = new StringRequest (
+                Request.Method.GET,
+                Constants.ENDPOINT + "Pedido/BuscaPedidoAberto?idUsuario=" + idUsuario,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        setMesaAberta(1);
+                        stop = true;
+                        dialog.hide();
+                        startActivity( intentMesa );
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 401) {
+                            //Toast.makeText(mContext, mContext.getString(R.string.login_invalido), Toast.LENGTH_SHORT).show();
+                        } else {
+                            //Toast.makeText(mContext, mContext.getString(R.string.erro_request), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Token", token);
+                headers.put("Id", idUsuario);
+                return headers;
+            }
+        };
+
+        VolleyHelperRequest.getInstance(mContext).addToRequestQueue(stringRequest);
+    }
+
+    public void callAsynchronousTask() {
+
+        stop = false;
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String token = preferences.getString(Constants.TOKEN, null);
+        final String id = preferences.getString(Constants.ID, null);
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        final TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (stop) {
+                    return;
+                }
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            //IF RESPONSE VOLLEY -> stop = true;
+                            doRequestCheckPedido(token, id);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 2000);
+
+    }
+
+    public void setMesaAberta(int statusMesa) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.MESA_ABERTA, statusMesa);
         editor.commit();
     }
 

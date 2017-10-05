@@ -38,10 +38,13 @@
         <activity
             android:name=".barcode.BarcodeCaptureActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
-        <activity android:name=".mesa.MesaActivity"
+        <activity
+            android:name=".mesa.MesaActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity android:name=".mesa.MesaContaActivity" />
+        <activity android:name=".garcom.GarcomMainActivity"></activity>
     </application>
 
 </manifest>

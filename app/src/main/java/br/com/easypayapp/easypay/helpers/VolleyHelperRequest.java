@@ -34,7 +34,7 @@ public class VolleyHelperRequest {
     }
 
     public static synchronized VolleyHelperRequest getInstance(Context context){
-        if(mInstance == null){
+        if(mInstance == null) {
             mInstance = new VolleyHelperRequest(context);
         }
         return mInstance;

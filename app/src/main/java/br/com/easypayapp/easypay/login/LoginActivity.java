@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -42,11 +43,12 @@ public class LoginActivity extends BaseActivity {
         initViews();
     }
 
-    private void setTokenPrefs(String token, String id) {
+    private void setTokenPrefs(String token, String id, String n_cartao) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.TOKEN, token);
         editor.putString(Constants.ID, id);
+        editor.putString(Constants.N_CARTAO, n_cartao);
         editor.commit();
     }
 
@@ -95,8 +97,14 @@ public class LoginActivity extends BaseActivity {
 
                         String token = obj.get("Token").getAsString();
                         String id = obj.get("Id").getAsString();
+                        JsonArray array = obj.getAsJsonArray("Cartao");
+                        String n_cartao = "";
 
-                        setTokenPrefs(token, id);
+                        if (array.size() != 0) {
+                            n_cartao = array.get(0).getAsJsonObject().get("Numero").getAsString();
+                        }
+
+                        setTokenPrefs(token, id, n_cartao);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
 

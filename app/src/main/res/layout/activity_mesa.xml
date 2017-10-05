@@ -35,7 +35,7 @@ tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textName"
+            android:id="@+id/textEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RazzMatazz"
@@ -44,18 +44,16 @@ tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textResponsible"
+            android:id="@+id/textGarcom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Atendente responsável: Martis"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textNumTable"
+            android:id="@+id/textMesa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mesa: 57"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -128,29 +126,29 @@ tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
         android:weightSum="3">
 
         <TextView
+            android:id="@+id/textTxServ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Tx. Serv: 10%"
             android:textColor="@android:color/white"
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/textCouver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Couver: 5%"
             android:textColor="@android:color/white"
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/textTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Total: R$150,90"
             android:textColor="@android:color/white"
             android:textSize="13sp" />
 
