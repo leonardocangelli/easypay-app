@@ -40,7 +40,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mContext = getApplicationContext();
-
         initViews();
     }
 
@@ -87,7 +86,6 @@ public class LoginActivity extends BaseActivity {
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage(mContext.getString(R.string.carregando));
         pDialog.show();
-
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.ENDPOINT + "usuario/login",
