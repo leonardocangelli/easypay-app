@@ -28,6 +28,7 @@ import br.com.easypayapp.easypay.Constants;
 import br.com.easypayapp.easypay.MainActivity;
 import br.com.easypayapp.easypay.R;
 import br.com.easypayapp.easypay.cadastro.CadastroActivity;
+import br.com.easypayapp.easypay.garcom.GarcomMainActivity;
 import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 
 public class LoginActivity extends BaseActivity {
@@ -44,11 +45,12 @@ public class LoginActivity extends BaseActivity {
         initViews();
     }
 
-    private void setTokenPrefs(String token, String id, String n_cartao) {
+    private void setTokenPrefs(String token, String id, String n_cartao, String idPerfil) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.TOKEN, token);
         editor.putString(Constants.ID, id);
+        editor.putString(Constants.ID_PERFIL, idPerfil);
         editor.putString(Constants.N_CARTAO, n_cartao);
         editor.commit();
     }
@@ -100,14 +102,26 @@ public class LoginActivity extends BaseActivity {
                         String token = obj.get("Token").getAsString();
                         String id = obj.get("Id").getAsString();
                         JsonArray array = obj.getAsJsonArray("Cartao");
+                        String idPerfil = obj.get("IdPerfil").getAsString();
                         String n_cartao = "";
 
                         if (array.size() != 0) {
                             n_cartao = array.get(0).getAsJsonObject().get("Numero").getAsString();
                         }
 
-                        setTokenPrefs(token, id, n_cartao);
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        setTokenPrefs(token, id, n_cartao, idPerfil);
+
+                        if (idPerfil.equalsIgnoreCase("6")) {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        } else {
+                            String idEmpresa = obj.get("IdEmpresa").getAsString();
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString(Constants.ID_EMPRESA, idEmpresa);
+                            editor.commit();
+                            startActivity(new Intent(LoginActivity.this, GarcomMainActivity.class));
+                        }
+
                         finish();
 
                         pDialog.hide();

@@ -43,8 +43,24 @@
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".mesa.MesaContaActivity" />
-        <activity android:name=".garcom.GarcomMainActivity"></activity>
+        <activity
+            android:name=".mesa.MesaContaActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".garcom.GarcomMainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".garcom.AberturaMesaActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".garcom.DetalhesMesaActivity" />
+        <activity android:name=".garcom.AddProdutosActivity" />
+        <activity android:name=".garcom.ProdutosActivity" />
+        <activity android:name=".garcom.MesasAbertasActivity" />
+        <activity android:name=".loja.LojaProdutosActivity" />
+        <activity android:name=".loja.ConfirmacaoPagamento"></activity>
     </application>
 
 </manifest>

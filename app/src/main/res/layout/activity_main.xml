@@ -62,9 +62,9 @@
             android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_pan_tool"
             android:focusable="true"
-            android:onClick="abrirAmigos"
+            android:onClick="abrirLojas"
             android:padding="24dp"
-            android:text="@string/amigos"
+            android:text="Lojas"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="17sp" />

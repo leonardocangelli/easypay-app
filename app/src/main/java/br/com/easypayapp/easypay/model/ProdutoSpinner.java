@@ -2,25 +2,26 @@ package br.com.easypayapp.easypay.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.StringDef;
-
-import java.io.Serializable;
 
 /**
- * Created by joseleonardocangelli on 01/10/17.
+ * Created by joseleonardocangelli on 08/10/17.
  */
 
-public class Produto implements Parcelable {
+public class ProdutoSpinner implements Parcelable {
 
     private Long id;
     private String descricao, observacao;
     private double preco, total;
     private int quantidade;
 
-    public Produto() {
+    public ProdutoSpinner(String descricao) {
+        this.descricao = descricao;
     }
 
-    protected Produto(Parcel in) {
+    public ProdutoSpinner() {
+    }
+
+    protected ProdutoSpinner(Parcel in) {
         descricao = in.readString();
         observacao = in.readString();
         preco = in.readDouble();
@@ -90,7 +91,7 @@ public class Produto implements Parcelable {
 
     @Override
     public String toString() {
-        return descricao + "\t \tR$ " + preco + " \t \t" + quantidade + "\t \tR$ " + getTotal();
+        return descricao;
     }
 
     @Override

@@ -78,4 +78,9 @@ public class Pedido {
     public void setData(String data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "Mesa " + mesa;
+    }
 }

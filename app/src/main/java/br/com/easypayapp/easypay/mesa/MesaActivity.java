@@ -34,6 +34,7 @@ import br.com.easypayapp.easypay.R;
 import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 import br.com.easypayapp.easypay.model.Pedido;
 import br.com.easypayapp.easypay.model.Produto;
+import br.com.easypayapp.easypay.model.Usuario;
 
 public class MesaActivity extends ComposeActivity {
 
@@ -43,6 +44,7 @@ public class MesaActivity extends ComposeActivity {
 
     private double intentTaxa=0, intentCouver=0, intentValorTotal=0;
     private String intentGarcom, intentMesa;
+    private Long intentIdPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class MesaActivity extends ComposeActivity {
         intent.putExtra("couver", intentCouver);
         intent.putExtra("garcom", intentGarcom);
         intent.putExtra("mesa", intentMesa);
+        intent.putExtra("idPedido", intentIdPedido);
         startActivity(intent);
     }
 
@@ -146,6 +149,7 @@ public class MesaActivity extends ComposeActivity {
                         intentValorTotal = totalPedidos * ( 1+(couver/100) );
                         intentGarcom = atendente;
                         intentMesa = mesa;
+                        intentIdPedido = id;
 
                         pDialog.hide();
                     }
@@ -173,4 +177,5 @@ public class MesaActivity extends ComposeActivity {
 
         VolleyHelperRequest.getInstance(mContext).addToRequestQueue(stringRequest);
     }
+
 }

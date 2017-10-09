@@ -34,4 +34,12 @@
     <string name="permission_camera_rationale">É necessário ter acesso à câmera</string>
     <string name="no_camera_permission">O App pode apresentar problemas por não ter permissão para acessar a câmera</string>
     <string name="low_storage_error">Erro, memória insuficiente</string>
+
+    <array name="produtos">
+        <item>Selecione o Produto</item>
+        <item>Refrigerante</item>
+        <item>Batata Frita</item>
+        <item>Sorvete</item>
+    </array>
+
 </resources>

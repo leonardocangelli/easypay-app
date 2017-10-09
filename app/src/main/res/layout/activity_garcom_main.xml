@@ -46,7 +46,7 @@
                 android:focusable="true"
                 android:onClick="openTable"
                 android:padding="24dp"
-                android:text="Open Table"
+                android:text="Abrir Mesa"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
@@ -63,7 +63,7 @@
                 android:focusable="true"
                 android:onClick="manageTables"
                 android:padding="24dp"
-                android:text="Manage Tables"
+                android:text="Gerenciar Mesas"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />

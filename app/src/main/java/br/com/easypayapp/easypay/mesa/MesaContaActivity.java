@@ -1,5 +1,6 @@
 package br.com.easypayapp.easypay.mesa;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,10 +16,20 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import br.com.easypayapp.easypay.ComposeActivity;
 import br.com.easypayapp.easypay.Constants;
 import br.com.easypayapp.easypay.MainActivity;
 import br.com.easypayapp.easypay.R;
+import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 
 public class MesaContaActivity extends ComposeActivity {
 
@@ -95,18 +106,23 @@ public class MesaContaActivity extends ComposeActivity {
     }
 
     public void pagarEasyPay(View view) {
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String n_cartao = preferences.getString(Constants.N_CARTAO, null);
+        final String token = preferences.getString(Constants.TOKEN, null);
+        final String idUsuario = preferences.getString(Constants.ID, null);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         if (!n_cartao.equals("")) {
             alert.setTitle("Confirmar pagamento");
-            alert.setMessage("Você autoriza o pagamento no valor de R$ " + valorFinal + " em seu cartão de crédito de número " + n_cartao + " ?");
+            alert.setMessage("Você autoriza o pagamento no valor de R$ " + valorFinal + " em seu cartão de crédito com final " + n_cartao.substring(12,16) + " ?");
             alert.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    finalizarConta();
+                    Intent intent = getIntent();
+                    final Long idPedido = intent.getExtras().getLong("idPedido");
+                    doRequestFecharConta(String.valueOf(idPedido), token, idUsuario);
                 }
             });
             alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -144,6 +160,51 @@ public class MesaContaActivity extends ComposeActivity {
             }
         });
         alert.create().show();
+    }
+
+    public void doRequestFecharConta(final String idPedido, final String token, final String idUsuario) {
+
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage(mContext.getString(R.string.carregando));
+        pDialog.show();
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.PUT,
+                Constants.ENDPOINT + "Pedido/AtualizarPedido",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        pDialog.hide();
+                        finalizarConta();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pDialog.hide();
+                        Toast.makeText(mContext, mContext.getString(R.string.erro_request), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String>  params = new HashMap<>();
+                params.put("IdStatus", "2");
+                params.put("Id", idPedido);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Token", token);
+                headers.put("Id", idUsuario);
+                return headers;
+            }
+        };
+
+        VolleyHelperRequest.getInstance(mContext).addToRequestQueue(stringRequest);
     }
 
 }

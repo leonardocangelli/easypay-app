@@ -91,7 +91,8 @@ public class CadastroCartaoActivity extends ComposeActivity {
 
     public boolean isAllFilled() {
         boolean filledNome = edit_text_nome.getText().toString().trim().length() != 0;
-        boolean filledNumero = edit_text_numero.getText().toString().trim().length() != 0;
+        boolean filledNumero = edit_text_numero.getText().toString().trim().length() != 0 &&
+                               edit_text_numero.getText().toString().trim().length() == 16;
         boolean filledMes = edit_text_mes.getText().toString().trim().length() != 0;
         boolean filledAno = edit_text_ano.getText().toString().trim().length() != 0;
         boolean filledCvv = edit_text_cvv.getText().toString().trim().length() != 0;

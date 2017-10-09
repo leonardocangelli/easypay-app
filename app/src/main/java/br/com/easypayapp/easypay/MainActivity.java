@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -26,6 +27,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.zxing.BarcodeFormat;
@@ -39,10 +42,14 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import br.com.easypayapp.easypay.barcode.BarcodeCaptureActivity;
 import br.com.easypayapp.easypay.cadastro.CadastroActivity;
 import br.com.easypayapp.easypay.cartao.CadastroCartaoActivity;
+import br.com.easypayapp.easypay.garcom.AberturaMesaActivity;
+import br.com.easypayapp.easypay.garcom.GarcomMainActivity;
 import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 import br.com.easypayapp.easypay.login.LoginActivity;
+import br.com.easypayapp.easypay.loja.LojaProdutosActivity;
 import br.com.easypayapp.easypay.mesa.MesaActivity;
 import br.com.easypayapp.easypay.model.Pedido;
 import br.com.easypayapp.easypay.model.Usuario;
@@ -54,6 +61,9 @@ public class MainActivity extends ComposeActivity {
     boolean stop = false;
     private AlertDialog dialog;
     private Intent intentMesa;
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final int BARCODE_READER_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +114,38 @@ public class MainActivity extends ComposeActivity {
 
     }
 
-    public void abrirAmigos(View view) {
-        Toast.makeText(this, "Amigos!", Toast.LENGTH_SHORT).show();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == BARCODE_READER_REQUEST_CODE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    Point[] p = barcode.cornerPoints;
+
+                    startActivity(new Intent(this, LojaProdutosActivity.class));
+
+                } else Toast.makeText(this, R.string.no_barcode_captured, Toast.LENGTH_SHORT).show();
+            } else Log.e(LOG_TAG, String.format(getString(R.string.barcode_error_format),
+                    CommonStatusCodes.getStatusCodeString(resultCode)));
+        } else super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void abrirLojas(View view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String n_cartao = preferences.getString(Constants.N_CARTAO, "");
+        if (!n_cartao.equals("")) {
+            Intent intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
+            startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+        } else {
+            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+            alert.setMessage("Para pagar pelo EasyPay você precisa cadastrar seu cartão de crédito.");
+            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            alert.create().show();
+        }
     }
 
     public void abrirHistorico(View view) {
@@ -119,9 +159,13 @@ public class MainActivity extends ComposeActivity {
     private void checkToken() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String token = preferences.getString(Constants.TOKEN, null);
+        String idPerfil = preferences.getString(Constants.ID_PERFIL, null);
 
         if (token == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        } else if (token != null && !idPerfil.equalsIgnoreCase("6")) {
+            startActivity(new Intent(MainActivity.this, GarcomMainActivity.class));
             finish();
         }
     }
