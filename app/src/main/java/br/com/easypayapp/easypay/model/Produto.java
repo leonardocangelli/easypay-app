@@ -21,6 +21,7 @@ public class Produto implements Parcelable {
     }
 
     protected Produto(Parcel in) {
+        id = in.readLong();
         descricao = in.readString();
         observacao = in.readString();
         preco = in.readDouble();
@@ -100,6 +101,7 @@ public class Produto implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
         dest.writeString(descricao);
         dest.writeString(observacao);
         dest.writeDouble(preco);
@@ -108,6 +110,7 @@ public class Produto implements Parcelable {
     }
 
     private void readFromParcel(Parcel in) {
+        id = in.readLong();
         descricao = in.readString();
         observacao = in.readString();
         preco = in.readDouble();

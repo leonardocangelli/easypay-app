@@ -120,7 +120,11 @@ public class AddProdutosActivity extends ComposeActivity {
                 produtosPedido.add(produto);
             }
 
-            Toast.makeText(mContext, "Produto inserido!", Toast.LENGTH_SHORT).show();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            String token = preferences.getString(Constants.TOKEN, null);
+            String id = preferences.getString(Constants.ID, null);
+
+            doRequestInserir(id, token, getIntent().getStringExtra("idPedido"), produto);
             limparCampos();
         } else {
             Toast.makeText(mContext, mContext.getString(R.string.erro_campos), Toast.LENGTH_LONG).show();
@@ -130,6 +134,7 @@ public class AddProdutosActivity extends ComposeActivity {
     public void visualizarItens(View view) {
         Intent intent = new Intent(mContext, ProdutosActivity.class);
         intent.putParcelableArrayListExtra("produtos", produtosPedido);
+        intent.putExtra("idPedido", getIntent().getStringExtra("idPedido"));
         startActivity(intent);
     }
 
@@ -171,7 +176,6 @@ public class AddProdutosActivity extends ComposeActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                         pDialog.hide();
                     }
                 },
@@ -187,6 +191,54 @@ public class AddProdutosActivity extends ComposeActivity {
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Token", token);
+                headers.put("Id", idGarcom);
+                return headers;
+            }
+        };
+
+        VolleyHelperRequest.getInstance(mContext).addToRequestQueue(stringRequest);
+    }
+
+    public void doRequestInserir(final String idGarcom, final String token, final String idPedido, final Produto produto) {
+
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage(mContext.getString(R.string.carregando));
+        pDialog.show();
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.ENDPOINT + "pedidoproduto/addprodutopedido",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        pDialog.hide();
+                        Toast.makeText(mContext, response.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pDialog.hide();
+                        Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("IdPedido", idPedido);
+                params.put("IdProduto", Long.toString(produto.getId()));
+                params.put("Quanditade", String.valueOf(produto.getQuantidade()));
+
+                return params;
+            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();

@@ -67,21 +67,22 @@ public class MesaContaActivity extends ComposeActivity {
 
         textNumTable.setText("Mesa: " + mesa);
         textResponsible.setText("Atendente Responsável: " + garcom);
-        textCouver.setText("Couver: " + String.valueOf(couver) + "%");
-        textService.setText("Tx. Serv: " + String.valueOf(txServico) + "%");
-        textTotal.setText("Total: R$ " + String.valueOf(valorTotal));
+        textCouver.setText("Couver: 10%");
+        textService.setText("Tx. Serv: 10%");
+        textTotal.setText("Total: R$ " + String.valueOf(  String.format("%.2f", valorTotal) ));
 
-        valorFinal = String.valueOf(valorTotal);
+        valorFinal = String.valueOf(String.format("%.2f",valorTotal));
+        chkTxServ.setChecked(true);
 
         chkTxServ.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (chkTxServ.isChecked()) {
-                    textTotal.setText("Total: R$ " + String.valueOf( String.format("%.2f", valorTotal * ( 1+(txServico/100) )) ) );
-                    valorFinal = String.format("%.2f", valorTotal * ( 1+(txServico/100) ));
+                    textTotal.setText("Total: R$ " + String.valueOf( String.format("%.2f", valorTotal) ));
+                    valorFinal = String.valueOf(  String.format("%.2f", valorTotal) );
                 } else {
-                    textTotal.setText("Total: R$ " + String.valueOf(valorTotal));
-                    valorFinal = String.valueOf(valorTotal);
+                    textTotal.setText("Total: R$ " + String.valueOf( String.format("%.2f", ( valorTotal - (valorTotal * 0.10) ) ) ));
+                    valorFinal = String.format("%.2f", ( valorTotal - (valorTotal * 0.10) ) );
                 }
             }
         });

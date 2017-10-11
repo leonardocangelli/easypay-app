@@ -14,6 +14,7 @@ android:paddingStart="16dp"
 android:paddingTop="8dp"
 tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
 
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -112,11 +113,18 @@ tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
 
     </LinearLayout>
 
-    <ListView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

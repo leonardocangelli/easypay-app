@@ -184,6 +184,7 @@ public class MainActivity extends ComposeActivity {
             }
         });
         dialog = builder.create();
+        dialog.setTitle("Apresente para o garçom.");
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 

@@ -74,14 +74,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Dividido entre X amigos"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-
         </LinearLayout>
 
         <LinearLayout

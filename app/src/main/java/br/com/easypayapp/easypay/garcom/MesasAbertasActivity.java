@@ -43,7 +43,6 @@ public class MesasAbertasActivity extends ComposeActivity {
     private Context mContext;
     private ListView listMesas;
     private ArrayAdapter<Pedido> adapter;
-    private String[] mesas = {"Mesa 15", "Mesa 18", "Mesa 23"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

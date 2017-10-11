@@ -151,7 +151,6 @@ public class AberturaMesaActivity extends ComposeActivity {
                         pDialog.hide();
 
                         // CHAMAR ENDPOINT ABRIR MESA
-                        Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(mContext, DetalhesMesaActivity.class);
                         intent.putExtra("nome", textNome.getText().toString());
                         intent.putExtra("mesa", edtMesa.getText().toString());

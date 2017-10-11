@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -46,6 +47,8 @@ public class MesaActivity extends ComposeActivity {
     private String intentGarcom, intentMesa;
     private Long intentIdPedido;
 
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +60,21 @@ public class MesaActivity extends ComposeActivity {
         initViews();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String token = preferences.getString(Constants.TOKEN, null);
-        String id = preferences.getString(Constants.ID, null);
+        final String token = preferences.getString(Constants.TOKEN, null);
+        final String id = preferences.getString(Constants.ID, null);
 
         doRequestCheckPedido(token, id);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                doRequestCheckPedido(token, id);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     public void initViews() {
@@ -114,8 +128,8 @@ public class MesaActivity extends ComposeActivity {
                         pedido.setId(id);
                         pedido.setMesa(mesa);
                         pedido.setAtendente(atendente);
-                        pedido.setTxServico(txServico);
-                        pedido.setCouver(couver);
+                        pedido.setTxServico(10);
+                        pedido.setCouver(10);
                         pedido.setIdStatus(idStatus);
                         //pedido.setIdEmpresa(idEmpresa);
                         pedido.setData(data);
@@ -140,13 +154,13 @@ public class MesaActivity extends ComposeActivity {
 
                         textMesa.setText("Mesa: " + mesa);
                         textGarcom.setText("Atendente Responsável: " + atendente);
-                        textCouver.setText("Couver: " + String.valueOf(couver) + "%");
-                        textTxServico.setText("Tx. Serv: " + String.valueOf(txServico) + "%");
-                        textTotal.setText("Total: R$ " + totalPedidos * ( 1+(couver/100) ) );
+                        textCouver.setText("Couver: 10%");
+                        textTxServico.setText("Tx. Serv: 10%");
+                        textTotal.setText("Total: R$ " +  String.format("%.2f", (totalPedidos * 1.20) ) );
 
                         intentCouver = couver;
                         intentTaxa = txServico;
-                        intentValorTotal = totalPedidos * ( 1+(couver/100) );
+                        intentValorTotal = totalPedidos * 1.20;
                         intentGarcom = atendente;
                         intentMesa = mesa;
                         intentIdPedido = id;

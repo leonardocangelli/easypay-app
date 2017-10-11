@@ -163,12 +163,12 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/background_button"
         android:clickable="true"
+        android:onClick="continuar"
         android:paddingEnd="78dp"
         android:paddingLeft="78dp"
         android:paddingRight="78dp"
         android:paddingStart="78dp"
         android:text="@string/continuar"
-        android:onClick="continuar"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
