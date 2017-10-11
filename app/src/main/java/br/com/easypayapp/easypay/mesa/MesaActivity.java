@@ -47,6 +47,7 @@ public class MesaActivity extends ComposeActivity {
     private String intentGarcom, intentMesa;
     private Long intentIdPedido;
 
+    // Refresh ListView
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
