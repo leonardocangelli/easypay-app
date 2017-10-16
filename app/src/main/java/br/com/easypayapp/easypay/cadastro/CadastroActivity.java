@@ -74,8 +74,8 @@ public class CadastroActivity extends ComposeActivity {
         if (token != null) {
             setHideActionBar(false);
             setBackButton(true);
-            setTitleMenu("Meus Dados");
-            btnContinuar.setText("Gravar");
+            setTitleMenu(mContext.getString(R.string.meus_dados_string));
+            btnContinuar.setText(mContext.getString(R.string.gravar));
             btnAlterarCartao.setVisibility(View.VISIBLE);
             getDados(token, id);
         } else {
@@ -123,6 +123,7 @@ public class CadastroActivity extends ComposeActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.TOKEN, token);
         editor.putString(Constants.ID, id);
+        editor.putString(Constants.ID_PERFIL, "6");
         editor.commit();
     }
 
@@ -130,7 +131,8 @@ public class CadastroActivity extends ComposeActivity {
         boolean filledNome = edit_text_nome.getText().toString().trim().length() != 0;
         boolean filledEmail = edit_text_email.getText().toString().trim().length() != 0;
         boolean filledTelefone = edit_text_telefone.getText().toString().trim().length() != 0;
-        boolean filledCpf = edit_text_cpf.getText().toString().trim().length() != 0;
+        boolean filledCpf = edit_text_cpf.getText().toString().trim().length() != 0 &&
+                            edit_text_cpf.getText().toString().trim().length() == 11;
         boolean filledSenha = edit_text_senha.getText().toString().trim().length() != 0;
 
         return filledNome & filledEmail & filledTelefone & filledCpf & filledSenha;

@@ -17,6 +17,15 @@ public class Produto implements Parcelable {
     private double preco, total;
     private int quantidade;
 
+    public Produto(Long id, String descricao, String observacao, double preco, double total, int quantidade) {
+        this.id = id;
+        this.descricao = descricao;
+        this.observacao = observacao;
+        this.preco = preco;
+        this.total = total;
+        this.quantidade = quantidade;
+    }
+
     public Produto() {
     }
 

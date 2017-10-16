@@ -79,8 +79,8 @@ public class CadastroCartaoActivity extends ComposeActivity {
         if (token != null && intent.getExtras() == null) {
             setHideActionBar(false);
             setBackButton(true);
-            setTitleMenu("Meu Cartão");
-            btnCadastrar.setText("Gravar");
+            setTitleMenu(mContext.getString(R.string.meu_cartao));
+            btnCadastrar.setText(mContext.getString(R.string.gravar));
             btnCadastrarDepois.setVisibility(View.GONE);
             getDados(token, id);
         } else {

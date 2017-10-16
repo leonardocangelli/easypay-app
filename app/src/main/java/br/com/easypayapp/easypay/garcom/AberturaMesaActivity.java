@@ -43,8 +43,9 @@ public class AberturaMesaActivity extends ComposeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abertura_mesa);
         setBackButton(true);
-        setTitleMenu("Abertura de Mesa");
         mContext = getApplicationContext();
+        setTitleMenu(mContext.getString(R.string.abertura_mesa));
+
         initViews();
 
         String idCliente = getIntent().getStringExtra("idCliente");
@@ -125,7 +126,7 @@ public class AberturaMesaActivity extends ComposeActivity {
         if (filledMesa) {
             doRequestAbrirMesa(id, token, idCliente, edtMesa.getText().toString());
         } else {
-            Toast.makeText(mContext, "Preencha o número da mesa", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, mContext.getString(R.string.numero_mesa), Toast.LENGTH_LONG).show();
         }
 
     }

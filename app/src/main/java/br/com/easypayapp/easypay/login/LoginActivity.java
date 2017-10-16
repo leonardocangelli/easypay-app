@@ -76,7 +76,6 @@ public class LoginActivity extends BaseActivity {
         else
             Toast.makeText(mContext, mContext.getString(R.string.erro_campos), Toast.LENGTH_LONG).show();
 
-
     }
 
     public void abrirCadastro(View view) {
@@ -125,6 +124,7 @@ public class LoginActivity extends BaseActivity {
                         finish();
 
                         pDialog.hide();
+
                     }
                 },
                 new Response.ErrorListener() {

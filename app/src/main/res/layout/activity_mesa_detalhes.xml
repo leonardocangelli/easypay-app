@@ -29,6 +29,51 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_marginTop="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="11">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="Descrição"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="Valor"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="Qtd"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="Total"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -121,7 +166,7 @@
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
         android:layout_height="300dp">

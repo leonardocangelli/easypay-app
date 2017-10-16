@@ -54,8 +54,8 @@ public class AddProdutosActivity extends ComposeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_produto);
         setBackButton(true);
-        setTitleMenu("Adicionar");
         mContext = getApplicationContext();
+        setTitleMenu(mContext.getString(R.string.adicionar));
         initViews();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -147,7 +147,7 @@ public class AddProdutosActivity extends ComposeActivity {
     public void getProdutos(final String token, final String idGarcom) {
 
         final List<ProdutoSpinner> listaProdutos = new ArrayList<>();
-        listaProdutos.add(new ProdutoSpinner("Selecione o Produto"));
+        listaProdutos.add(new ProdutoSpinner(mContext.getString(R.string.selecione)));
 
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage(mContext.getString(R.string.carregando));

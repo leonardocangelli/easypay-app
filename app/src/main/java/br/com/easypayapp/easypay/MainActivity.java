@@ -79,39 +79,11 @@ public class MainActivity extends ComposeActivity {
 
     public void abrirMesa(View view) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int mesa_aberta = preferences.getInt(Constants.MESA_ABERTA, 0);
 
-        if(mesa_aberta == 0) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-            dialog.setTitle("Abrir Mesa");
-            dialog.setMessage("Verificamos que você não possui mesa aberta. Deseja abrir?");
-            dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                    String qrcode = preferences.getString(Constants.QRCODE, null);
-                    String id = preferences.getString(Constants.ID, null);
+        String token = preferences.getString(Constants.TOKEN, null);
+        String id = preferences.getString(Constants.ID, null);
 
-                    if (qrcode == null) {
-                        gerarQR(id);
-                    } else {
-                        abrirDialog(qrcode);
-                    }
-
-                }
-            });
-            dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            dialog.create().show();
-        } else {
-            startActivity( intentMesa );
-        }
-
-
+        doRequestCheck(token, id);
     }
 
     @Override
@@ -290,6 +262,112 @@ public class MainActivity extends ComposeActivity {
         editor.commit();
     }
 
+
+    public void doRequestCheck(final String token, final String idUsuario) {
+
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final int mesa_aberta = preferences.getInt(Constants.MESA_ABERTA, 0);
+
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage(mContext.getString(R.string.carregando));
+        pDialog.show();
+
+        StringRequest stringRequest = new StringRequest (
+                Request.Method.GET,
+                Constants.ENDPOINT + "Pedido/BuscaPedidoAberto?idUsuario=" + idUsuario,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        setMesaAberta(1);
+                        pDialog.hide();
+                        startActivity( intentMesa );
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 401) {
+                            setMesaAberta(0);
+
+                            if(mesa_aberta == 0) {
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                                dialog.setTitle("Abrir Mesa");
+                                dialog.setMessage("Verificamos que você não possui mesa aberta. Deseja abrir?");
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                        String qrcode = preferences.getString(Constants.QRCODE, null);
+                                        String id = preferences.getString(Constants.ID, null);
+
+                                        if (qrcode == null) {
+                                            gerarQR(id);
+                                        } else {
+                                            abrirDialog(qrcode);
+                                        }
+
+                                    }
+                                });
+                                dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+                                dialog.create().show();
+                            }
+
+                            pDialog.hide();
+                        } else {
+                            setMesaAberta(0);
+
+                            if(mesa_aberta == 0) {
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                                dialog.setTitle("Abrir Mesa");
+                                dialog.setMessage("Verificamos que você não possui mesa aberta. Deseja abrir?");
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                        String qrcode = preferences.getString(Constants.QRCODE, null);
+                                        String id = preferences.getString(Constants.ID, null);
+
+                                        if (qrcode == null) {
+                                            gerarQR(id);
+                                        } else {
+                                            abrirDialog(qrcode);
+                                        }
+
+                                    }
+                                });
+                                dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+                                dialog.create().show();
+                            }
+
+                            pDialog.hide();
+                        }
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Token", token);
+                headers.put("Id", idUsuario);
+                return headers;
+            }
+        };
+
+        VolleyHelperRequest.getInstance(mContext).addToRequestQueue(stringRequest);
+    }
 
     public void doRequestCheckPedido(final String token, final String idUsuario) {
 

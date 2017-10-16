@@ -49,8 +49,8 @@ public class MesasAbertasActivity extends ComposeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listagem_mesas);
         setBackButton(true);
-        setTitleMenu("Mesas");
         mContext = getApplicationContext();
+        setTitleMenu(mContext.getString(R.string.mesas));
         initViews();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);

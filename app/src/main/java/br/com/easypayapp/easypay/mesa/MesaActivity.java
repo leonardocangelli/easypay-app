@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import java.util.Map;
 import br.com.easypayapp.easypay.ComposeActivity;
 import br.com.easypayapp.easypay.Constants;
 import br.com.easypayapp.easypay.R;
+import br.com.easypayapp.easypay.adapter.ListaAdapter;
 import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 import br.com.easypayapp.easypay.model.Pedido;
 import br.com.easypayapp.easypay.model.Produto;
@@ -55,7 +57,7 @@ public class MesaActivity extends ComposeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mesa);
         mContext = getApplicationContext();
-        setTitleMenu("Minha Mesa");
+        setTitleMenu(mContext.getString(R.string.minha_mesa));
         setBackButton(true);
 
         initViews();
@@ -148,8 +150,8 @@ public class MesaActivity extends ComposeActivity {
 
                             produtos.add(produto);
                         }
-
-                        ArrayAdapter<Produto> adapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, produtos);
+                        ListAdapter adapter = new ListaAdapter(produtos, mContext);
+                        //ArrayAdapter<Produto> adapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, produtos);
                         listViewProdutos.setAdapter(adapter);
 
 

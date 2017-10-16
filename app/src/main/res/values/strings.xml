@@ -35,11 +35,26 @@
     <string name="no_camera_permission">O App pode apresentar problemas por não ter permissão para acessar a câmera</string>
     <string name="low_storage_error">Erro, memória insuficiente</string>
 
-    <array name="produtos">
-        <item>Selecione o Produto</item>
-        <item>Refrigerante</item>
-        <item>Batata Frita</item>
-        <item>Sorvete</item>
-    </array>
+    <string name="meus_dados_string">Meus Dados</string>
+    <string name="gravar">Gravar</string>
+    <string name="meu_cartao">Meu Cartão</string>
+    <string name="abertura_mesa">Abertura de Mesa</string>
+    <string name="numero_mesa">Preencha o número da mesa</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="selecione">Selecione o Produto</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="mesa">Mesa: </string>
+    <string name="fechar_conta">Fechar Conta</string>
+    <string name="fechar_conta_desejo">Deseja fechar a conta desta mesa?</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="conta_finalizada">Conta finalizada com sucesso!</string>
+    <string name="mesas">Mesas</string>
+    <string name="pedido">Pedido</string>
+    <string name="dados_cartao">Dados do Cartão</string>
+    <string name="pagamento_realizado">Pagamento realizado com sucesso!</string>
+    <string name="produtos">Produtos</string>
+    <string name="minha_mesa_string">Minha Mesa</string>
+    <string name="pagamento">Pagamento</string>
 
 </resources>

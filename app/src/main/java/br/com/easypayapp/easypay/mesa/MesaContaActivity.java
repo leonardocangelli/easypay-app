@@ -43,7 +43,7 @@ public class MesaContaActivity extends ComposeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mesa_conta);
         mContext = getApplicationContext();
-        setTitleMenu("Pagamento");
+        setTitleMenu(mContext.getString(R.string.pagamento));
         setBackButton(true);
 
         initViews();

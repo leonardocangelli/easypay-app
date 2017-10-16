@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ import br.com.easypayapp.easypay.ComposeActivity;
 import br.com.easypayapp.easypay.Constants;
 import br.com.easypayapp.easypay.MainActivity;
 import br.com.easypayapp.easypay.R;
+import br.com.easypayapp.easypay.adapter.ListaAdapter;
 import br.com.easypayapp.easypay.helpers.VolleyHelperRequest;
 import br.com.easypayapp.easypay.mesa.MesaActivity;
 import br.com.easypayapp.easypay.mesa.MesaContaActivity;
@@ -56,8 +58,8 @@ public class DetalhesMesaActivity extends ComposeActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mesa_detalhes);
         setBackButton(true);
-        setTitleMenu("Detalhes");
         mContext = getApplicationContext();
+        setTitleMenu(mContext.getString(R.string.detalhes));
         initViews();
 
         idPedido = getIntent().getStringExtra("idPedido");
@@ -84,7 +86,7 @@ public class DetalhesMesaActivity extends ComposeActivity {
         textTotal = (TextView) findViewById(R.id.textTotal);
         textNumeroMesa = (TextView) findViewById(R.id.textNumeroMesa);
         String mesa = getIntent().getStringExtra("mesa");
-        textNumeroMesa.setText("Mesa: " + mesa);
+        textNumeroMesa.setText(mContext.getString(R.string.mesa) + mesa);
     }
 
     public void adicionar(View view) {
@@ -96,9 +98,9 @@ public class DetalhesMesaActivity extends ComposeActivity {
     public void fechar(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Fechar Conta");
-        alert.setMessage("Deseja fechar a conta desta mesa?");
-        alert.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        alert.setTitle(mContext.getString(R.string.fechar_conta));
+        alert.setMessage(mContext.getString(R.string.fechar_conta_desejo));
+        alert.setPositiveButton(mContext.getString(R.string.confirmar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(DetalhesMesaActivity.this);
@@ -108,7 +110,7 @@ public class DetalhesMesaActivity extends ComposeActivity {
                 doRequestFecharConta(idPedido, token, idUsuario);
             }
         });
-        alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(mContext.getString(R.string.cancelar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -173,8 +175,8 @@ public class DetalhesMesaActivity extends ComposeActivity {
     public void finalizarConta() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setCancelable(false);
-        alert.setTitle("EasyPay");
-        alert.setMessage("Conta finalizada com sucesso!");
+        alert.setTitle(mContext.getString(R.string.app_name));
+        alert.setMessage(mContext.getString(R.string.conta_finalizada));
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -187,7 +189,7 @@ public class DetalhesMesaActivity extends ComposeActivity {
 
     public void getProdutos(final String token, final String idGarcom) {
 
-        final List<Produto> listaProdutos = new ArrayList<>();
+        final ArrayList<Produto> listaProdutos = new ArrayList<>();
 
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage(mContext.getString(R.string.carregando));
@@ -214,7 +216,8 @@ public class DetalhesMesaActivity extends ComposeActivity {
                                 total += produto.getTotal();
                                 listaProdutos.add(produto);
                             }
-                            ArrayAdapter<Produto> adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_list_item_1, listaProdutos);
+                            ListAdapter adapter = new ListaAdapter(listaProdutos, mContext);
+                            //ArrayAdapter<Produto> adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_list_item_1, listaProdutos);
                             listView.setAdapter(adapter);
                             textTotal.setText("Total: R$ " + String.format("%.2f", (total * 1.20) ));
                         } catch (JSONException e) {

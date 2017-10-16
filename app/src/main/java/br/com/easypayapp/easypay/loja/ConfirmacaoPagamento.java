@@ -42,9 +42,9 @@ public class ConfirmacaoPagamento extends ComposeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmacao_pagamento);
-        setTitle("Dados do Cartão");
-        setBackButton(true);
         mContext = getApplicationContext();
+        setTitle(mContext.getString(R.string.dados_cartao));
+        setBackButton(true);
         initViews();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -63,8 +63,8 @@ public class ConfirmacaoPagamento extends ComposeActivity {
 
     public void confirmarPagamento(View v) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(ConfirmacaoPagamento.this);
-        dialog.setTitle("EasyPay");
-        dialog.setMessage("Pagamento realizado com sucesso!");
+        dialog.setTitle(mContext.getString(R.string.app_name));
+        dialog.setMessage(mContext.getString(R.string.pagamento_realizado));
         dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

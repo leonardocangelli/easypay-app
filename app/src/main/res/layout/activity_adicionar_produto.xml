@@ -29,7 +29,6 @@
         android:paddingEnd="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:entries="@array/produtos"
         android:paddingStart="16dp" />
 
     <EditText

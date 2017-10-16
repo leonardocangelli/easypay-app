@@ -114,6 +114,7 @@ tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
         android:layout_height="250dp">
