@@ -64,7 +64,6 @@ public class MesaContaActivity extends ComposeActivity {
         textNumTable = (TextView) findViewById(R.id.textNumTable);
         textResponsible = (TextView) findViewById(R.id.textResponsible);
 
-
         textNumTable.setText("Mesa: " + mesa);
         textResponsible.setText("Atendente Responsável: " + garcom);
         textCouver.setText("Couver: 10%");
@@ -91,7 +90,7 @@ public class MesaContaActivity extends ComposeActivity {
     public void chamarGarcom(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Deseja chamar o garçom?");
-        alert.setMessage("A qualquer momento você pode chamar o garcom caso tenha dúvidas ou queira realizar seu pagamento direto no estabelecimento.");
+        alert.setMessage("A qualquer momento você pode chamar o garçom caso tenha dúvidas ou queira realizar seu pagamento direto no estabelecimento.");
         alert.setPositiveButton("Chamar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -109,7 +108,7 @@ public class MesaContaActivity extends ComposeActivity {
     public void pagarEasyPay(View view) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String n_cartao = preferences.getString(Constants.N_CARTAO, null);
+        String n_cartao = preferences.getString(Constants.N_CARTAO, "");
         final String token = preferences.getString(Constants.TOKEN, null);
         final String idUsuario = preferences.getString(Constants.ID, null);
 
@@ -133,6 +132,7 @@ public class MesaContaActivity extends ComposeActivity {
                 }
             });
         } else {
+            alert.setTitle("Atenção");
             alert.setMessage("Para pagar pelo EasyPay você precisa cadastrar seu cartão de crédito.");
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override

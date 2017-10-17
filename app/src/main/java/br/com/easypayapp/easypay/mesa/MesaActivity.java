@@ -51,6 +51,7 @@ public class MesaActivity extends ComposeActivity {
 
     // Refresh ListView
     SwipeRefreshLayout mSwipeRefreshLayout;
+    TextView emptyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class MesaActivity extends ComposeActivity {
         textTxServico = (TextView) findViewById(R.id.textTxServ);
         textCouver = (TextView) findViewById(R.id.textCouver);
         textTotal = (TextView) findViewById(R.id.textTotal);
+        emptyText = (TextView) findViewById(R.id.textEmpty);
     }
 
     public void fecharConta(View view) {
@@ -167,6 +169,8 @@ public class MesaActivity extends ComposeActivity {
                         intentGarcom = atendente;
                         intentMesa = mesa;
                         intentIdPedido = id;
+
+                        listViewProdutos.setEmptyView(emptyText);
 
                         pDialog.hide();
                     }

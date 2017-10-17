@@ -117,7 +117,7 @@ tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
         android:layout_marginTop="10dp"
         android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="170dp">
 
         <ListView
         android:id="@+id/listView"
@@ -126,6 +126,16 @@ tools:context="br.com.easypayapp.easypay.mesa.MesaActivity">
         android:layout_marginTop="4dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:layout_gravity="center"
+        android:id="@+id/textEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="16dp"
+        android:text="Puxe para atualizar" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -127,8 +127,8 @@ public class CadastroCartaoActivity extends ComposeActivity {
     }
 
     public void cadastrarDepois(View view) {
+        finishAffinity();
         startActivity(new Intent(mContext, MainActivity.class));
-        finish();
     }
 
     public void getDados(final String token, final String idUsuario) {
@@ -242,8 +242,8 @@ public class CadastroCartaoActivity extends ComposeActivity {
                         editor.putString(Constants.N_CARTAO, cartao.getNumero());
                         editor.commit();
 
+                        finishAffinity();
                         startActivity(new Intent(mContext, MainActivity.class));
-                        finish();
 
                         pDialog.hide();
 

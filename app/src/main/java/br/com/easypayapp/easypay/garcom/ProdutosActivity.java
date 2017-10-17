@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +46,7 @@ public class ProdutosActivity extends ComposeActivity {
     private ListView listProdutos;
     private ArrayAdapter<Produto> adapter;
     private String idPedido = "";
+    private TextView textTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +62,15 @@ public class ProdutosActivity extends ComposeActivity {
 
     private void initViews() {
         listProdutos = (ListView) findViewById(R.id.listProdutos);
+        textTotal = (TextView) findViewById(R.id.textTotal);
         ArrayList<Produto> produtos = this.getIntent().getParcelableArrayListExtra("produtos");
         ListAdapter adapter = new ListaAdapter(produtos, mContext);
         //adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, produtos);
         listProdutos.setAdapter(adapter);
+
+        double total = 0;
+        for(Produto p : produtos) total += p.getTotal();
+        textTotal.setText("Total: R$ " + String.format("%.2f", total ));
     }
 
     public void finalizar(View view) {

@@ -50,6 +50,7 @@ public class DetalhesMesaActivity extends ComposeActivity {
     private Context mContext;
     private String idPedido = "";
     private ListView listView;
+    TextView emptyText;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -86,7 +87,8 @@ public class DetalhesMesaActivity extends ComposeActivity {
         textTotal = (TextView) findViewById(R.id.textTotal);
         textNumeroMesa = (TextView) findViewById(R.id.textNumeroMesa);
         String mesa = getIntent().getStringExtra("mesa");
-        textNumeroMesa.setText(mContext.getString(R.string.mesa) + mesa);
+        textNumeroMesa.setText("Mesa: " + mesa);
+        emptyText = (TextView) findViewById(R.id.textEmpty);
     }
 
     public void adicionar(View view) {
@@ -219,6 +221,9 @@ public class DetalhesMesaActivity extends ComposeActivity {
                             ListAdapter adapter = new ListaAdapter(listaProdutos, mContext);
                             //ArrayAdapter<Produto> adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_list_item_1, listaProdutos);
                             listView.setAdapter(adapter);
+
+                            listView.setEmptyView(emptyText);
+
                             textTotal.setText("Total: R$ " + String.format("%.2f", (total * 1.20) ));
                         } catch (JSONException e) {
                             e.printStackTrace();

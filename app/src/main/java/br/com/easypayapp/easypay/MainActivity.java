@@ -110,6 +110,7 @@ public class MainActivity extends ComposeActivity {
             startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
         } else {
             AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+            alert.setTitle("Atenção");
             alert.setMessage("Para pagar pelo EasyPay você precisa cadastrar seu cartão de crédito.");
             alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
