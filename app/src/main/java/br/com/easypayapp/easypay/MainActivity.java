@@ -262,7 +262,7 @@ public class MainActivity extends ComposeActivity {
         editor.putString(Constants.QRCODE, qrcode);
         editor.commit();
     }
-
+  
 
     public void doRequestCheck(final String token, final String idUsuario) {
 
